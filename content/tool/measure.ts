@@ -24,6 +24,8 @@ export class ScreenMeasureTool implements IScreenTool {
 
   private interval_: any;
 
+  private fontSize_;
+
   constructor(
     readonly screen: Screen
   ) {
@@ -31,6 +33,26 @@ export class ScreenMeasureTool implements IScreenTool {
 
     this.dom_ = document.createElement('canvas');
     this.ctx_ = this.dom_.getContext('2d');
+
+    this.fontSize_ = chrome.storage.sync.get(['measureFontSize'], result => {
+      this.fontSize_ = result['measureFontSize'];
+    });
+    this.fontSize_ = this.fontSize_ || 11;
+    window.addEventListener('keypress', e => {
+      if (e.key === '=') {
+        this.fontSize_ = this.fontSize_ + 1;
+        chrome.storage.sync.set({
+          'measureFontSize': this.fontSize_
+        });
+      }
+      else if (e.key === '-') {
+        this.fontSize_ = this.fontSize_ - 1;
+        chrome.storage.sync.set({
+          'measureFontSize': this.fontSize_
+        });
+      }
+    });
+
     window.addEventListener('resize', () => this.resize());
     this.resize();
   }
@@ -88,6 +110,7 @@ export class ScreenMeasureTool implements IScreenTool {
     this.ctx_.clearRect(0, 0, this.screen.width, this.screen.height);
 
     this.ctx_.lineWidth = 1;
+    this.ctx_.strokeStyle = '#8be0ad';
     this.ctx_.beginPath();
     this.ctx_.moveTo(left, y + 0.5);
     this.ctx_.lineTo(right, y + 0.5);
@@ -95,23 +118,23 @@ export class ScreenMeasureTool implements IScreenTool {
     this.ctx_.lineTo(x + 0.5, bottom);
     this.ctx_.stroke();
 
-    this.ctx_.font = '11px';
+    this.ctx_.font = `${this.fontSize_}px Arial`;
 
     {
       const horizontalLabelDim = this.ctx_.measureText(`${right - left}`);
-      const hly = y + 5;
+      const hly = y + this.fontSize_ / 2;
       const hlx = Math.min(this.screen.width - horizontalLabelDim.width - 5, right + 5);
       this.ctx_.fillStyle = 'black';
-      this.ctx_.fillRect(hlx - 2, hly - 12, horizontalLabelDim.width + 4, 11 + 4);
+      this.ctx_.fillRect(hlx - 2, hly - this.fontSize_, horizontalLabelDim.width + 4, this.fontSize_ + 4);
       this.ctx_.fillStyle = 'white';
       this.ctx_.fillText(`${right - left}`, hlx, hly);
     }
     { 
       const verticalLabelDim = this.ctx_.measureText(`${bottom - top}`);
-      const vly = Math.min(this.screen.height - 10, bottom + 15);
+      const vly = Math.min(this.screen.height - 10, bottom + this.fontSize_ + 4);
       const vlx = x - verticalLabelDim.width / 2;
       this.ctx_.fillStyle = 'black';
-      this.ctx_.fillRect(vlx - 2, vly - 12, verticalLabelDim.width + 4, 11 + 4);
+      this.ctx_.fillRect(vlx - 2, vly - this.fontSize_, verticalLabelDim.width + 4, this.fontSize_ + 4);
       this.ctx_.fillStyle = 'white';
       this.ctx_.fillText(`${bottom - top}`, vlx, vly);
     }
@@ -128,16 +151,16 @@ export class ScreenMeasureTool implements IScreenTool {
       const horizontalLabelDim = this.ctx_.measureText(`${hoveringRect.right - hoveringRect.left}`);
       const hly = hoveringRect.top - 6;
       const hlx = hoveringRect.left + hoveringRect.width / 2 - horizontalLabelDim.width / 2;
-      this.ctx_.fillStyle = '#474747';
-      this.ctx_.fillRect(hlx - 2, hly - 12, horizontalLabelDim.width + 4, 11 + 4);
+      this.ctx_.fillStyle = '#043542';
+      this.ctx_.fillRect(hlx - 2, hly - this.fontSize_, horizontalLabelDim.width + 4, this.fontSize_ + 4);
       this.ctx_.fillStyle = 'white';
       this.ctx_.fillText(`${hoveringRect.right - hoveringRect.left}`, hlx, hly);
 
       const verticalLabelDim = this.ctx_.measureText(`${hoveringRect.bottom - hoveringRect.top}`);
-      const vly = hoveringRect.top + hoveringRect.height / 2 + 11 / 2;
+      const vly = hoveringRect.top + hoveringRect.height / 2 + this.fontSize_ / 2;
       const vlx = hoveringRect.right + 6;
-      this.ctx_.fillStyle = '#474747';
-      this.ctx_.fillRect(vlx - 2, vly - 12, verticalLabelDim.width + 4, 11 + 4);
+      this.ctx_.fillStyle = '#043542';
+      this.ctx_.fillRect(vlx - 2, vly - this.fontSize_, verticalLabelDim.width + 4, this.fontSize_ + 4);
       this.ctx_.fillStyle = 'white';
       this.ctx_.fillText(`${hoveringRect.bottom - hoveringRect.top}`, vlx, vly);
     }
