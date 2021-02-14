@@ -1,3 +1,4 @@
 node_modules
 dist/background.js
 dist/contentScript.js
+dist/pixdom.zip
