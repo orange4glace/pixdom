@@ -1,0 +1,16 @@
+{
+  "name": "PixDOM",
+  "version": "1.0",
+  "description": "Pixel measurement extension",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": "get_started128.png"
+  },
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "activeTab"
+  ]
+}

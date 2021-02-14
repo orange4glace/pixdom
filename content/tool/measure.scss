@@ -1,0 +1,31 @@
+.tool-measure {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  .horizontal {
+    position: absolute;
+    top: 0;
+    height: 1px;
+    background-color: cornflowerblue;
+  }
+
+  .vertical {
+    position: absolute;
+    left: 0;
+    width: 1px;
+    background-color: cornflowerblue;
+  }
+
+  .label {
+    position: absolute;
+    font-size: 11px;
+    background: black;
+    color: white;
+    padding: 3px;
+    box-sizing: border-box;
+    opacity: 1;
+    border-radius: 7px;
+  }
+
+}
