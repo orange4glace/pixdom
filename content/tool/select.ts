@@ -94,10 +94,10 @@ export class ScreenSelectTool implements IScreenTool {
         this.selectingDOM_ = document.createElement('div');
         this.selectingDOM_.className = `${UNIQUE_ID} selecting`;
         this.dom_.append(this.selectingDOM_);
-        this.top_ = y;
-        this.right_ = x;
-        this.bottom_ = y;
-        this.left_ = x;
+        this.top_ = this.mousedownY_;
+        this.right_ = this.mousedownX_;
+        this.bottom_ = this.mousedownY_;
+        this.left_ = this.mousedownX_;
         this.updateSelectinDOM();
         this.phase_ = 'RANGE';
       }
