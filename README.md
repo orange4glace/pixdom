@@ -12,18 +12,19 @@ $ git clone https://github.com/orange4glace/pixdom.git
 $ cd pixdom
 $ npm install
 $ npm run build
-Open chrome
+Open Chrome
 Go to chrome://extensions
+Enable developer mode
 Click 'Load Unpacked'
 Select ./dist folder
 ```
 
 ## Usage
 - Click *PixDOM* extension icon to enable the extension
-- Left click to select an element
-- Left drag to select an element within a range
-- Right click to deselect an element
-- Right drag to deselect elements within a range
-- Press *M* key to activate/deactivate
-- Press *=* key to increase the font size
-- Press *-* key to decrease the font size
+- Left mouse click to select an element
+- Left mouse drag to select an element within a range
+- Right mouse click to deselect an element
+- Right mouse drag to deselect elements within a range
+- Press **M** key to activate/deactivate
+- Press **=** key to increase the font size
+- Press **-** key to decrease the font size
