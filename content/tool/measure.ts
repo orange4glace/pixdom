@@ -13,14 +13,6 @@ export class ScreenMeasureTool implements IScreenTool {
 
   private dom_: HTMLCanvasElement;
   private ctx_: CanvasRenderingContext2D;
-  private horizontalDOM_: HTMLElement;
-  private verticalDOM_: HTMLElement;
-
-  private horizontalLabelDOM_: HTMLElement;
-  private verticalLabelDOM_: HTMLElement;
-
-  private widthLabelDOM_: HTMLElement;
-  private heightLabelDOM_: HTMLElement;
 
   private interval_: any;
 
@@ -65,25 +57,7 @@ export class ScreenMeasureTool implements IScreenTool {
   onActivate(): void {
     this.disposables_ = new DisposableStore();
 
-    this.horizontalDOM_ = document.createElement('div');
-    this.verticalDOM_ = document.createElement('div');
-    this.horizontalLabelDOM_ = document.createElement('div');
-    this.verticalLabelDOM_ = document.createElement('div');
-    this.widthLabelDOM_ = document.createElement('div');
-    this.heightLabelDOM_ = document.createElement('div');
     this.dom_.className = `${UNIQUE_ID} tool-measure`;
-    this.horizontalDOM_.className = `${UNIQUE_ID} horizontal`;
-    this.verticalDOM_.className = `${UNIQUE_ID} vertical`;
-    this.horizontalLabelDOM_.className = `${UNIQUE_ID} label label-horizontal`;
-    this.verticalLabelDOM_.className = `${UNIQUE_ID} label label-vertical`;
-    this.widthLabelDOM_.className = `${UNIQUE_ID} label label-horizontal`;
-    this.heightLabelDOM_.className = `${UNIQUE_ID} label label-vertical`;
-    this.dom_.append(this.horizontalDOM_);
-    this.dom_.append(this.verticalDOM_);
-    this.dom_.append(this.horizontalLabelDOM_);
-    this.dom_.append(this.verticalLabelDOM_);
-    this.dom_.append(this.widthLabelDOM_);
-    this.dom_.append(this.heightLabelDOM_);
     this.screen.dom.append(this.dom_);
 
     this.disposables_.add(this.screen.onMousemove(() => this.draw()));
@@ -165,8 +139,6 @@ export class ScreenMeasureTool implements IScreenTool {
       this.ctx_.fillText(`${hoveringRect.bottom - hoveringRect.top}`, vlx, vly);
     }
     else {
-      this.widthLabelDOM_.style.display = 'none';
-      this.heightLabelDOM_.style.display = 'none';
     }
   }
 
