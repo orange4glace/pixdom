@@ -35,7 +35,7 @@ export class ScreenMeasureTool implements IScreenTool {
     this.ctx_ = this.dom_.getContext('2d');
 
     this.fontSize_ = chrome.storage.sync.get(['measureFontSize'], result => {
-      this.fontSize_ = result['measureFontSize'];
+      this.fontSize_ = result['measureFontSize'] || 11;
     });
     this.fontSize_ = this.fontSize_ || 11;
     window.addEventListener('keypress', e => {
